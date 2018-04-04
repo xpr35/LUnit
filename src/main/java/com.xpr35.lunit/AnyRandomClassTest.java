@@ -14,12 +14,12 @@ public class AnyRandomClassTest {
 
     @Before
     public void beforeMethodOne() {
-        System.out.println("Success first before method invocation");
+//        System.out.println("before#1");
     }
 
     @Before
     public void beforeMethodTwo() {
-        System.out.println("Success second before method invocation");
+//        System.out.println("before#2");
     }
 
     @Test
@@ -40,11 +40,11 @@ public class AnyRandomClassTest {
 
     @After
     public void afterMethodOne() {
-        System.out.println("Success first after method invocation");
+//        System.out.println("after#1");
     }
 
     @After
     public void afterMethodTwo() {
-        System.out.println("Success second after method invocation");
+//        System.out.println("after#2");
     }
 }

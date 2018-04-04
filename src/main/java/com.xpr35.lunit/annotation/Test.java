@@ -6,6 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Class for Test annotations
+ *
  * Created by xpres on 16/03/18.
  */
 @Retention(RetentionPolicy.RUNTIME)

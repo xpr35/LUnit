@@ -3,6 +3,8 @@ package com.xpr35.lunit.assertions;
 import com.xpr35.lunit.exception.TestAssertionError;
 
 /**
+ * Class with assertions for project
+ *
  * Created by xpres on 17/03/18.
  */
 public class Assertions {
