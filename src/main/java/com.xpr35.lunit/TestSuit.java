@@ -12,7 +12,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xpres on 04/04/18.
@@ -47,16 +47,17 @@ public class TestSuit {
     }
 
     public void run() {
-        while (!testMethodQueue.isEmpty()) {
-            System.out.println(testMethodQueue.peek().getTest().getName());
-            try {
-                Future<String> fut = executorService.submit(new Worker(testMethodQueue.poll()));
-                report.add(fut.get());
-            } catch (Exception e) {
-                System.err.println(e);
-            }
+        try {
+            executorService.submit(new Worker(testMethodQueue, report));
+        } catch (Exception e) {
+            System.err.println(e);
         }
         executorService.shutdown();
+        try {
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            System.err.println("Was interrupted" + e.getMessage());
+        }
     }
 
     public String report() {
