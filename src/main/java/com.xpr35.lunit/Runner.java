@@ -14,7 +14,7 @@ public class Runner {
             numberOfThreads = Integer.valueOf(args[args.length - 1]);
         } catch (NumberFormatException e) {
             System.err.println("Cannot parse number of threads param. Gonna use " +
-                    DEFAULT_THREADSNUMBER + " sthreads as default");
+                    DEFAULT_THREADSNUMBER + " threads as default");
         }
         TestSuit testSuit = new TestSuit(numberOfThreads);
         for (int i = 0; i < args.length - 1; i++) {
