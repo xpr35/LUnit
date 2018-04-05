@@ -30,7 +30,12 @@ public class Worker implements Callable {
                 result = testInst.getTest().getName() + " OK";
                 runAfter();
             } catch (Throwable e) {
-                result = testInst.getTest().getName() + " Failed: " + e.getCause();
+                if (testInst.getTest().getAnnotation(Test.class).expected() == e.getCause().getClass()) {
+                    result = testInst.getTest().getName() + " OK";
+                    runAfter();
+                } else {
+                    result = testInst.getTest().getName() + " Failed: " + e.getCause();
+                }
             }
         } else {
             result = testInst.getTest().getName() + " Ignored";
