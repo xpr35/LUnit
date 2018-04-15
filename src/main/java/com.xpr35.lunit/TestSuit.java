@@ -22,8 +22,10 @@ public class TestSuit {
 
     private Queue<TestInst> testMethodQueue = new ConcurrentLinkedQueue<TestInst>();
     private Queue<ReportEntry> report = new ConcurrentLinkedQueue<ReportEntry>();
+    private int threadNumber;
 
     public TestSuit(int n) {
+        this.threadNumber = n;
         this.executorService = Executors.newFixedThreadPool(n);
     }
 
@@ -49,10 +51,12 @@ public class TestSuit {
     }
 
     public void run() {
-        try {
-            executorService.submit(new Worker(testMethodQueue, report));
-        } catch (Exception e) {
-            System.err.println(e);
+        for (int i = 0; i < this.threadNumber; i++) {
+            try {
+                executorService.submit(new Worker(testMethodQueue, report));
+            } catch (Exception e) {
+                System.err.println(e);
+            }
         }
         executorService.shutdown();
         try {
