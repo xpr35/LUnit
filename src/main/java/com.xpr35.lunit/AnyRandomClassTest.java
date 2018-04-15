@@ -35,8 +35,8 @@ public class AnyRandomClassTest {
 
     @Test(expected = RuntimeException.class)
     public void thirdTest() {
-        throw new RuntimeException();
-//        assertEquals("one", "three");
+//        throw new RuntimeException();
+        assertEquals("one", "three");
     }
 
     @After

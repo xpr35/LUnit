@@ -21,7 +21,7 @@ public class TestSuit {
     private ExecutorService executorService;
 
     private Queue<TestInst> testMethodQueue = new ConcurrentLinkedQueue<TestInst>();
-    private Queue<String> report = new ConcurrentLinkedQueue<String>();
+    private Queue<ReportEntry> report = new ConcurrentLinkedQueue<ReportEntry>();
 
     public TestSuit(int n) {
         this.executorService = Executors.newFixedThreadPool(n);
@@ -60,7 +60,18 @@ public class TestSuit {
         }
     }
 
-    public String report() {
-        return this.report.toString();
+    public String getReport() {
+        StringBuilder sb = new StringBuilder();
+        for (ReportEntry reportEntry : this.report) {
+            sb.append(reportEntry.getClassName());
+            sb.append(" ");
+            sb.append(reportEntry.getMethodName());
+            sb.append(" ");
+            sb.append(reportEntry.getStatus());
+            sb.append(" ");
+            sb.append(reportEntry.getCause());
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

@@ -26,6 +26,6 @@ public class Runner {
             }
         }
         testSuit.run();
-        System.out.println("\nTESTS:\n" + testSuit.report());
+        System.out.println("\nTESTS:\n" + testSuit.getReport());
     }
 }
