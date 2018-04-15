@@ -31,7 +31,7 @@ public class Worker implements Runnable {
             }
             ReportEntry result = new ReportEntry(testInst.getClazz().getName(),
                     testInst.getTest().getName(),
-                    "Error",
+                    ReportEntry.Status.ERROR,
                     "Cannot find class");
             try {
                 runBefore(testInst);
@@ -39,11 +39,11 @@ public class Worker implements Runnable {
                 if (testInst.getTest().getAnnotation(Test.class).expected() == Test.None.class) {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
-                            "Success");
+                            ReportEntry.Status.SUCCESS);
                 } else {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
-                            "Failed",
+                            ReportEntry.Status.FAILED,
                             "Was expected exception: "
                                     + testInst.getTest().getAnnotation(Test.class).expected());
                 }
@@ -52,17 +52,17 @@ public class Worker implements Runnable {
                 if (testInst.getTest().getAnnotation(Test.class).expected() == e.getCause().getClass()) {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
-                            "Success");
+                            ReportEntry.Status.SUCCESS);
                     runAfter(testInst);
                 } else if (TestAssertionError.class == e.getCause().getClass()) {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
-                            "Assertion error",
+                            ReportEntry.Status.ASSERTION_ERROR,
                             e.getCause().getMessage());
                 } else {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
-                            "Failed",
+                            ReportEntry.Status.FAILED,
                             e.getCause().getMessage());
                 }
             }

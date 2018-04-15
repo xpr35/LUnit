@@ -39,7 +39,9 @@ public class TestSuit {
                 if (!method.isAnnotationPresent(Ignore.class)) {
                     testMethodQueue.add(new TestInst(clazz, beforeList, afterList, method));
                 } else {
-                    System.err.println("Ignored: " + method.getName());
+                    report.add(new ReportEntry(clazz.getName(),
+                            method.getName(),
+                            ReportEntry.Status.IGNORED));
                 }
             }
 
@@ -61,6 +63,10 @@ public class TestSuit {
     }
 
     public String getReport() {
+        int success = 0;
+        int failed = 0;
+        int ignored = 0;
+        int assertion_error = 0;
         StringBuilder sb = new StringBuilder();
         for (ReportEntry reportEntry : this.report) {
             sb.append(reportEntry.getClassName());
@@ -71,7 +77,29 @@ public class TestSuit {
             sb.append(" ");
             sb.append(reportEntry.getCause());
             sb.append("\n");
+            switch (reportEntry.getStatus()) {
+                case SUCCESS:
+                    success++;
+                    break;
+                case FAILED:
+                    failed++;
+                    break;
+                case ASSERTION_ERROR:
+                    assertion_error++;
+                    break;
+                case IGNORED:
+                    ignored++;
+                    break;
+            }
         }
+        sb.append("\nREPORT:\nsuccess: ");
+        sb.append(success);
+        sb.append("\nfailed: ");
+        sb.append(failed);
+        sb.append("\nassertion error: ");
+        sb.append(assertion_error);
+        sb.append("\nignored: ");
+        sb.append(ignored);
         return sb.toString();
     }
 }
