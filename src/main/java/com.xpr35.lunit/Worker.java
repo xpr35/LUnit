@@ -3,6 +3,7 @@ package com.xpr35.lunit;
 import com.xpr35.lunit.annotation.After;
 import com.xpr35.lunit.annotation.Before;
 import com.xpr35.lunit.annotation.Test;
+import com.xpr35.lunit.exception.TestAssertionError;
 
 import java.lang.reflect.Method;
 import java.util.Queue;
@@ -53,6 +54,11 @@ public class Worker implements Runnable {
                             testInst.getTest().getName(),
                             "Success");
                     runAfter(testInst);
+                } else if (TestAssertionError.class == e.getCause().getClass()) {
+                    result = new ReportEntry(testInst.getClazz().getName(),
+                            testInst.getTest().getName(),
+                            "Assertion error",
+                            e.getCause().getMessage());
                 } else {
                     result = new ReportEntry(testInst.getClazz().getName(),
                             testInst.getTest().getName(),
